@@ -39,7 +39,20 @@ terraform plan
 terraform apply
 ```
 
-## Wiring up later stacks
+## Cost decision: Lambda runs outside the VPC
+
+To keep costs close to $0, the Lambda is **not** attached to the VPC. It runs in
+AWS's managed network with direct internet access (job boards, LLM APIs) and
+reaches S3 and DynamoDB over their public endpoints, secured by IAM and TLS.
+
+Putting a Lambda in a public subnet would not work: a VPC-attached Lambda never
+gets a public IP, so its only route to the internet is through a NAT gateway.
+
+The VPC above is still deployed (it's free) so we can move in later by adding a
+`vpc_config` block and setting `enable_nat_gateway = true` (about $32/mo), or
+by adding a cheap NAT instance.
+
+## Moving Lambda into the VPC later
 
 ```hcl
 vpc_config {
