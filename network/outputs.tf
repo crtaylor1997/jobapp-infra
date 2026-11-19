@@ -1,5 +1,11 @@
+# Other stacks can read these with terraform_remote_state (key network-<env>.tfstate).
+
 output "vpc_id" {
   value = module.network.vpc_id
+}
+
+output "vpc_cidr" {
+  value = module.network.vpc_cidr
 }
 
 output "private_subnet_ids" {

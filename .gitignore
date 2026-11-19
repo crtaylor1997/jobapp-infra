@@ -1,5 +1,7 @@
 # Terraform
 **/.terraform/*
+# Per-environment data dirs used by scripts/tf.ps1
+**/.terraform-*/
 *.tfstate
 *.tfstate.*
 crash.log
@@ -11,7 +13,10 @@ override.tf.json
 *_override.tf.json
 .terraform.tfstate.lock.info
 
-# Local backend config (contains account-specific bucket name)
+# Local-only (public repo): state bootstrap + wrapper scripts, and backend
+# configs that contain the AWS account ID in the state bucket name
+scripts/*.ps1
+*.backend.hcl
 backend.hcl
 
 # Keep the provider lock file committed

@@ -8,8 +8,8 @@ terraform {
     }
   }
 
-  # Partial config: values come from backend.hcl (copy backend.hcl.example).
-  #   terraform init -backend-config=backend.hcl
+  # Values come from <env>.backend.hcl. Run through the wrapper:
+  #   .\scripts\tf.ps1 network dev plan
   backend "s3" {}
 }
 
@@ -20,6 +20,7 @@ provider "aws" {
     tags = {
       Project     = var.project
       Environment = var.environment
+      Stack       = "network"
       ManagedBy   = "terraform"
     }
   }
